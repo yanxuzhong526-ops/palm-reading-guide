@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{subject_name}} · 手相解读</title>
+  <style>
+    :root {
+      --paper: #f7f6f2;
+      --card: #ffffff;
+      --ink: #111111;
+      --muted: #62625d;
+      --rule: #d9d8d2;
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); }
+    body {
+      margin: 0;
+      font-family: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      letter-spacing: .01em;
+    }
+    main { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 72px 0 96px; }
+    .eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    h1, h2, .display {
+      font-family: "Cormorant Garamond", "Bodoni Moda", "Songti SC", "STSong", serif;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+    h1 { margin: 18px 0 16px; font-size: clamp(52px, 8vw, 104px); line-height: .95; }
+    h2 { margin: 0 0 14px; font-size: 30px; line-height: 1.15; }
+    p { margin: 0; }
+    .cover { min-height: 72vh; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 0 56px; }
+    .subtitle { max-width: 600px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px 30px; padding-top: 24px; border-top: 1px solid var(--ink); }
+    .meta span { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+    .card { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 30px; break-inside: avoid; }
+    .hero-copy { grid-column: span 7; min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; }
+    .art { grid-column: span 5; min-height: 520px; display: grid; place-items: center; overflow: hidden; }
+    .art svg { width: 100%; height: auto; max-height: 450px; }
+    .wide { grid-column: span 12; }
+    .third { grid-column: span 4; }
+    .half { grid-column: span 6; }
+    .index { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; margin-bottom: 46px; }
+    .lead { font-family: "Songti SC", "STSong", serif; font-size: 24px; line-height: 1.55; }
+    .observed { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--muted); }
+    .confidence { display: inline-flex; align-items: center; gap: 7px; margin-top: 24px; font-size: 12px; color: var(--muted); }
+    .confidence::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+    .prompt-list { display: grid; gap: 0; margin-top: 18px; }
+    .prompt { padding: 18px 0; border-top: 1px solid var(--rule); }
+    footer { margin-top: 54px; padding-top: 18px; border-top: 1px solid var(--ink); display: flex; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 11px; }
+    @media (max-width: 800px) {
+      main { width: min(100% - 28px, 680px); padding-top: 36px; }
+      .hero-copy, .art, .third, .half, .wide { grid-column: span 12; }
+      .cover { min-height: 620px; }
+    }
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      html, body { background: #fff; }
+      main { width: 100%; margin: 0; padding: 0; }
+      .cover { min-height: 255mm; page-break-after: always; }
+      .grid { gap: 4mm; }
+      .card { border-radius: 5mm; padding: 7mm; }
+      .hero-copy, .art { min-height: 128mm; }
+      footer { page-break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="cover">
+      <div>
+        <div class="eyebrow">Private Palm Study · {{report_no}}</div>
+        <h1>掌心<br>阅读</h1>
+        <p class="subtitle">一份基于真实掌纹观察的传统手相文化解读。克制、具体，并保留不确定性。</p>
+      </div>
+      <div class="meta">
+        <div><span>对象</span><br>{{subject_name}}</div>
+        <div><span>性别分支</span><br>{{gender_profile}}</div>
+        <div><span>主读手</span><br>{{primary_hand}}</div>
+        <div><span>模式</span><br>{{reading_mode}}</div>
+        <div><span>日期</span><br>{{date}}</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card hero-copy">
+        <div><span class="index">01</span><h2>核心解读</h2></div>
+        <p class="lead">{{executive_reading}}</p>
+        <p class="observed"><strong>可见依据</strong><br>{{executive_evidence}}</p>
+      </article>
+      <figure class="card art" aria-label="掌纹黑白轮廓艺术">
+        {{palm_contour_svg}}
+      </figure>
+
+      <article class="card wide">
+        <span class="index">02</span><h2>看见了什么</h2>
+        <p>{{neutral_observations}}</p>
+        <span class="confidence">整体图像置信度：{{image_confidence}}</span>
+      </article>
+
+      <article class="card third">
+        <span class="index">03</span><h2>感情线</h2>
+        <p>{{heart_line_reading}}</p><p class="observed">{{heart_line_evidence}}</p>
+        <span class="confidence">{{heart_line_confidence}}</span>
+      </article>
+      <article class="card third">
+        <span class="index">04</span><h2>智慧线</h2>
+        <p>{{head_line_reading}}</p><p class="observed">{{head_line_evidence}}</p>
+        <span class="confidence">{{head_line_confidence}}</span>
+      </article>
+      <article class="card third">
+        <span class="index">05</span><h2>生命线</h2>
+        <p>{{life_line_reading}}</p><p class="observed">{{life_line_evidence}}</p>
+        <span class="confidence">{{life_line_confidence}}</span>
+      </article>
+
+      <article class="card half">
+        <span class="index">06</span><h2>命运线与次要纹路</h2>
+        <p>{{secondary_lines_reading}}</p>
+        <span class="confidence">{{secondary_lines_confidence}}</span>
+      </article>
+      <article class="card half">
+        <span class="index">07</span><h2>手型、指形与掌丘</h2>
+        <p>{{form_and_mounts_reading}}</p>
+        <span class="confidence">{{form_confidence}}</span>
+      </article>
+
+      <article class="card wide">
+        <span class="index">08</span><h2>综合主题</h2>
+        <p class="lead">{{synthesis}}</p>
+        <div class="prompt-list">
+          <div class="prompt">{{reflection_prompt_1}}</div>
+          <div class="prompt">{{reflection_prompt_2}}</div>
+          <div class="prompt">{{reflection_prompt_3}}</div>
+        </div>
+      </article>
+
+      <article class="card wide">
+        <span class="index">09</span><h2>方法说明</h2>
+        <p>{{gender_branch_note}} {{hand_comparison_note}}</p>
+      </article>
+    </section>
+
+    <footer>
+      <div>手相属于文化与娱乐性解读，不是科学预测，也不能替代医疗、法律或财务建议。</div>
+      <div>{{report_no}} · {{date}}</div>
+    </footer>
+  </main>
+</body>
+</html>
