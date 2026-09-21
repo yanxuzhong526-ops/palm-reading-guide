@@ -1,0 +1,10 @@
+interface:
+  display_name: "极简手相解读"
+  short_description: "按性别与左右手生成完整手相解读及黑白掌纹艺术报告"
+  icon_small: "./assets/palm-icon.svg"
+  icon_large: "./assets/palm-icon.svg"
+  brand_color: "#111111"
+  default_prompt: "Use $palm-reading-guide to analyze my palm photos and create a refined Chinese palm-reading guide."
+
+policy:
+  allow_implicit_invocation: true
